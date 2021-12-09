@@ -18,7 +18,8 @@
             type: 'GET',
             url: 'resp.php',
             success: function(dados) {
-                document.getElementById('texto').innerHTML=dados;
+                //document.getElementById('texto').innerHTML=dados;
+                $('#texto').text(dados);
             },
             error: function() {
                 console.log("ERRO");

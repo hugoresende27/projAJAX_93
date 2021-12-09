@@ -1,3 +1,3 @@
 <?php
 
-    echo "Ola AJAX!";
+    echo "Ola AJAX ";
