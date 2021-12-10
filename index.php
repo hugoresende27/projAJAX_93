@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,13 +25,12 @@
 <button onclick="listaCli()">Atualizar</button>
 
 <script>
-
+//-------------------------------------------------------------------------------
 $(document).ready(function(){
 
     // construção da lista de clientes
     listaCli();
 });
-
 
 //-------------------------------------------------------------------------------
     function listaCli(){
@@ -39,7 +38,7 @@ $(document).ready(function(){
             type: "GET",
             url:"ajax/todosClientes.php",
             success: function(dados){
-                console.log("OK")
+                //console.log("OK")
                 var clientes = JSON.parse(dados);//coleção de dados
                 /*
                 clientes.forEach(ele => {
@@ -51,14 +50,16 @@ $(document).ready(function(){
                 //$('#listaClientes').text(clientes[0]['nome']);
 
                 //IMPRIMIR LISTA COMPLETA DOS CLIENTES
+                
                 var html = "<ul>";
                 clientes.forEach ( c => {
-                    html += "<li onclick=\"detalheCli(c['id_cliente'])\">c['nome']</li>";
+                    html += "<li onclick=\"detalheCli(" + c['id_cliente'] + ")\">" + c['nome'] + "</li>";
                     
                 });
                 html += "</ul>";
 
                 $('#listaClientes').html(html);
+                
             },
             error: function(){
                 console.log("ERRO!");
@@ -68,7 +69,30 @@ $(document).ready(function(){
 
 //-------------------------------------------------------------------------------
     function detalheCli(id_cliente){
-        console.log(id_cliente);
+        //console.log(id_cliente);
+        $.ajax({
+            type: "POST", //porque vou enviar info por este scrip
+            url:"ajax/detalheCliente.php",
+            data: {id_cli: id_cliente},
+            success: function(dados){
+                console.clear();
+                console.log(dados);
+
+                var cliente = JSON.parse(dados);
+                console.log(cliente[0]);
+                var html = "<p>Nome: " + cliente.nome + "</p>";
+                    html += "<p>Email: " + cliente.email + "</p>";
+                    html += "<p>Telemóvel: " + cliente.telemovel + "</p>";
+
+                // colocar dentro do div o detalhe do cliente
+                $('#detailsCliente').html(html);
+        
+                
+            },
+            error: function(){
+                console.log("ERRO!");
+            }
+        });
     }
 </script>
     <!--  -->
