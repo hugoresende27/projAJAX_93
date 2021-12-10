@@ -22,7 +22,7 @@
             <li></li>
         </ul> -->
     </div>
-<button onclick="listaCli()">Atualizar</button>
+<!-- <button onclick="listaCli()">Atualizar</button> -->
 
 <script>
 //-------------------------------------------------------------------------------
@@ -60,6 +60,7 @@ $(document).ready(function(){
 
                 $('#listaClientes').html(html);
                 
+                
             },
             error: function(){
                 console.log("ERRO!");
@@ -76,16 +77,19 @@ $(document).ready(function(){
             data: {id_cli: id_cliente},
             success: function(dados){
                 console.clear();
-                console.log(dados);
+                var cliente = JSON.parse(dados)[0];
+                console.log(cliente);
 
-                var cliente = JSON.parse(dados);
-                console.log(cliente[0]);
+                
                 var html = "<p>Nome: " + cliente.nome + "</p>";
                     html += "<p>Email: " + cliente.email + "</p>";
                     html += "<p>Telemóvel: " + cliente.telemovel + "</p>";
-
+                
                 // colocar dentro do div o detalhe do cliente
                 $('#detailsCliente').html(html);
+
+                // atualiza a lista de cliente
+                listaCli();
         
                 
             },
